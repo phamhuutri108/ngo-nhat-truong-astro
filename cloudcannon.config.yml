@@ -6,6 +6,7 @@ source: ''
 paths:
   data: src/data
   static: public
+  uploads: public/uploads
 
 # Collections - Editable content
 collections_config:
@@ -49,7 +50,7 @@ data_config:
     name: UI Translations / Bản dịch giao diện
 
 # File upload paths
-uploads_dir: public/uploads/:collection
+uploads_dir: uploads
 
 # Build configuration
 _editables: {}
