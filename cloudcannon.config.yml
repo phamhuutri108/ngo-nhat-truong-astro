@@ -70,7 +70,7 @@ _inputs:
     type: textarea
     label: Content / Nội dung
   description:
-    type: text
+    type: html
     label: Description / Mô tả
   thumbnail:
     type: image

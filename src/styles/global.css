@@ -613,11 +613,8 @@ h1, h2, h3, h4, h5, p, .quote, .tagline {
     color: #555;
 }
 
-.painting-lb-desc {
-    font-size: 15px;
-    line-height: 1.8;
-    color: #333;
-    white-space: pre-line;
+.painting-lb-desc p {
+    margin-bottom: 12px;
 }
 
 .painting-lb-close {
@@ -1005,7 +1002,6 @@ h1, h2, h3, h4, h5, p, .quote, .tagline {
     font-size: 14px;
     line-height: 1.8;
     color: rgba(255,255,255,0.8);
-    white-space: pre-line;
 }
 
 .painting-lb-counter {
