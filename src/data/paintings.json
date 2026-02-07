@@ -1,55 +1,103 @@
 {
   "vi": {
     "title": "tranh",
+    "layout": "collage",
     "description": "Sắc màu và cảm xúc trên giấy dó.",
     "items": [
       {
-        "title": "Sen trắng",
-        "date": "Mùa thu 2025",
-        "excerpt": "Màu nước trên giấy dó.",
-        "content": "Bức tranh vẽ một đóa sen trắng duy nhất trong hồ. Sự cô đơn không đáng sợ, nó là khoảng không cần thiết để vẻ đẹp tỏa sáng."
+        "id": "thanh-y-tu-tai-quan-am",
+        "title": "Thanh Y Tự Tại Quán Âm",
+        "thumbnail": "",
+        "images": [],
+        "medium": "gouache, bút kim và vàng trên giấy canson",
+        "date": "06/2021",
+        "description": "Hình tượng Quán Thế Âm đã đi vào tâm trí tôi từ lúc còn nhỏ xíu bằng những lần phụ ngoại lau dọn bàn thờ, thắp hương; những lần hành hương cùng ngoại; những câu chuyện kể của ngoại về sự linh ứng của Quán Thế Âm đã nghe thấy tiếng nguyện cầu của ngoại. Sau này tôi còn thấy Quán Thế Âm trong ngoại, trong mẹ, trong các dì, trong những cái cây quanh nhà hay trong rừng, trong bạn bè, trong người điều trị bệnh, trong người nghệ sỹ, trong đám mây, trong cơn mưa, trong vạt nắng…"
       },
       {
+        "id": "sen-trang",
+        "title": "Sen trắng",
+        "thumbnail": "",
+        "images": [],
+        "medium": "màu nước trên giấy dó",
+        "date": "Mùa thu 2025",
+        "description": "Bức tranh vẽ một đóa sen trắng duy nhất trong hồ. Sự cô đơn không đáng sợ, nó là khoảng không cần thiết để vẻ đẹp tỏa sáng."
+      },
+      {
+        "id": "pho-vang",
         "title": "Phố vắng",
+        "thumbnail": "",
+        "images": [],
+        "medium": "ký họa chì than",
         "date": "2024",
-        "excerpt": "Ký họa chì than.",
-        "content": "Góc phố cổ Hội An vào một buổi sáng sớm mờ sương. Chưa có du khách, chỉ có những bức tường vàng im lìm kể chuyện thời gian."
+        "description": "Góc phố cổ Hội An vào một buổi sáng sớm mờ sương. Chưa có du khách, chỉ có những bức tường vàng im lìm kể chuyện thời gian."
       }
     ]
   },
   "en": {
     "title": "paintings",
+    "layout": "collage",
     "description": "Colors and emotions on Dó paper.",
     "items": [
       {
-        "title": "White Lotus",
-        "date": "Autumn 2025",
-        "excerpt": "Watercolor on Dó paper.",
-        "content": "A painting of a single white lotus in the lake. Loneliness is not scary; it is the necessary space for beauty to shine."
+        "id": "thanh-y-tu-tai-quan-am",
+        "title": "Thanh Y Tự Tại Quán Âm",
+        "thumbnail": "",
+        "images": [],
+        "medium": "gouache, pen and gold on canson paper",
+        "date": "06/2021",
+        "description": "The image of Avalokiteshvara entered my mind since I was very small through the times helping my grandmother clean the altar, light incense; the pilgrimages with her; her stories about how Avalokiteshvara had heard her prayers. Later I saw Avalokiteshvara in my grandmother, in my mother, in my aunts, in the trees around the house or in the forest, in friends, in healers, in artists, in clouds, in rain, in sunlight…"
       },
       {
+        "id": "sen-trang",
+        "title": "White Lotus",
+        "thumbnail": "",
+        "images": [],
+        "medium": "watercolor on Dó paper",
+        "date": "Autumn 2025",
+        "description": "A painting of a single white lotus in the lake. Loneliness is not scary; it is the necessary space for beauty to shine."
+      },
+      {
+        "id": "pho-vang",
         "title": "Quiet Street",
+        "thumbnail": "",
+        "images": [],
+        "medium": "charcoal sketch",
         "date": "2024",
-        "excerpt": "Charcoal sketch.",
-        "content": "A corner of Hoi An ancient town on a misty early morning. No tourists yet, only the yellow walls silently telling stories of time."
+        "description": "A corner of Hoi An ancient town on a misty early morning. No tourists yet, only the yellow walls silently telling stories of time."
       }
     ]
   },
   "fr": {
     "title": "peintures",
+    "layout": "collage",
     "description": "Couleurs et émotions sur papier Dó.",
     "items": [
       {
-        "title": "Lotus Blanc",
-        "date": "Automne 2025",
-        "excerpt": "Aquarelle sur papier Dó.",
-        "content": "Peinture d'un lotus blanc unique dans le lac. La solitude n'est pas effrayante ; c'est l'espace nécessaire pour que la beauté brille."
+        "id": "thanh-y-tu-tai-quan-am",
+        "title": "Thanh Y Tự Tại Quán Âm",
+        "thumbnail": "",
+        "images": [],
+        "medium": "gouache, stylo et or sur papier canson",
+        "date": "06/2021",
+        "description": "L'image d'Avalokiteshvara est entrée dans mon esprit depuis que j'étais tout petit, en aidant ma grand-mère à nettoyer l'autel, à allumer l'encens ; les pèlerinages avec elle ; ses histoires sur la façon dont Avalokiteshvara avait entendu ses prières. Plus tard, j'ai vu Avalokiteshvara dans ma grand-mère, dans ma mère, dans mes tantes, dans les arbres autour de la maison ou dans la forêt, dans les amis, dans les guérisseurs, dans les artistes, dans les nuages, dans la pluie, dans la lumière du soleil…"
       },
       {
+        "id": "sen-trang",
+        "title": "Lotus Blanc",
+        "thumbnail": "",
+        "images": [],
+        "medium": "aquarelle sur papier Dó",
+        "date": "Automne 2025",
+        "description": "Peinture d'un lotus blanc unique dans le lac. La solitude n'est pas effrayante ; c'est l'espace nécessaire pour que la beauté brille."
+      },
+      {
+        "id": "pho-vang",
         "title": "Rue Silencieuse",
+        "thumbnail": "",
+        "images": [],
+        "medium": "croquis au fusain",
         "date": "2024",
-        "excerpt": "Croquis au fusain.",
-        "content": "Un coin de la vieille ville de Hoi An par un petit matin brumeux. Pas encore de touristes, seuls les murs jaunes racontent silencieusement les histoires du temps."
+        "description": "Un coin de la vieille ville de Hoi An par un petit matin brumeux. Pas encore de touristes, seuls les murs jaunes racontent silencieusement les histoires du temps."
       }
     ]
   }

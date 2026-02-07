@@ -100,6 +100,20 @@ const allSectionData = {
         <img class="lightbox-content" id="lightbox-img">
     </div>
 
+    <!-- Painting Lightbox -->
+    <div id="painting-lightbox" class="painting-lightbox">
+        <span class="painting-lb-close" id="painting-lb-close">&times;</span>
+        <div class="painting-lb-content">
+            <div class="painting-lb-left">
+                <img id="painting-lb-img" src="" alt="">
+                <button class="painting-lb-nav prev" id="painting-lb-prev">&#8249;</button>
+                <button class="painting-lb-nav next" id="painting-lb-next">&#8250;</button>
+                <div class="painting-lb-counter" id="painting-lb-counter"></div>
+            </div>
+            <div class="painting-lb-right" id="painting-lb-info"></div>
+        </div>
+    </div>
+
     <!-- Client-side data and scripts -->
     <script define:vars={{ uiTranslations, allSectionData }}>
         window.__UI_TRANSLATIONS = uiTranslations;
@@ -326,7 +340,51 @@ const allSectionData = {
                     }
                 }
             }
-            // CASE B: LIST LAYOUT
+            // CASE B: COLLAGE LAYOUT (PAINTINGS)
+            else if (data.layout === 'collage') {
+                let html = `
+                    <div class="dynamic-content fade-in">
+                        <h2>${data.title}</h2>
+                        ${data.description ? `<p class="dynamic-desc">${data.description}</p>` : ''}
+                        <div class="collage-grid">
+                `;
+
+                if (data.items) {
+                    data.items.forEach((item, index) => {
+                        if (item.thumbnail) {
+                            html += `
+                                <div class="collage-item" data-painting-index="${index}">
+                                    <img src="${item.thumbnail}" alt="${item.title}" loading="lazy">
+                                    <div class="collage-overlay">
+                                        <span class="collage-label">${item.title}</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            html += `
+                                <div class="collage-item-text" data-painting-index="${index}">
+                                    <div class="collage-text-title">${item.title}</div>
+                                    ${item.medium ? `<div class="collage-text-medium">${item.medium}</div>` : ''}
+                                    ${item.date ? `<div class="collage-text-date">${item.date}</div>` : ''}
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
+                html += `</div></div>`;
+                dynamicDisplay.innerHTML = html;
+
+                window.currentPaintingData = data.items;
+
+                dynamicDisplay.querySelectorAll('[data-painting-index]').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const idx = parseInt(this.getAttribute('data-painting-index'));
+                        openPaintingDetail(idx);
+                    });
+                });
+            }
+            // CASE C: LIST LAYOUT
             else {
                 let descriptionHTML = data.description
                     ? `<p class="dynamic-desc">${data.description}</p>`
@@ -500,6 +558,104 @@ const allSectionData = {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
+
+        // --- 8c. PAINTING DETAIL (LIGHTBOX) ---
+        let paintingImageIndex = 0;
+
+        function openPaintingDetail(index) {
+            if (!window.currentPaintingData || !window.currentPaintingData[index]) return;
+
+            const painting = window.currentPaintingData[index];
+            const lightbox = document.getElementById('painting-lightbox');
+            const img = document.getElementById('painting-lb-img');
+            const info = document.getElementById('painting-lb-info');
+            const counter = document.getElementById('painting-lb-counter');
+
+            if (!lightbox || !img || !info) return;
+
+            // Determine images array: use images[] if available, else thumbnail as single image
+            let images = [];
+            if (painting.images && painting.images.length > 0) {
+                images = painting.images;
+            } else if (painting.thumbnail) {
+                images = [painting.thumbnail];
+            }
+
+            paintingImageIndex = 0;
+            window.currentPaintingImages = images;
+
+            // Show image or placeholder
+            if (images.length > 0) {
+                img.src = images[0];
+                img.style.display = 'block';
+            } else {
+                img.src = '';
+                img.style.display = 'none';
+            }
+
+            // Counter
+            if (counter) {
+                counter.textContent = images.length > 1 ? `1 / ${images.length}` : '';
+                counter.style.display = images.length > 1 ? 'block' : 'none';
+            }
+
+            // Nav buttons visibility
+            const prevBtn = document.getElementById('painting-lb-prev');
+            const nextBtn = document.getElementById('painting-lb-next');
+            if (prevBtn) prevBtn.style.display = images.length > 1 ? 'flex' : 'none';
+            if (nextBtn) nextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+
+            // Info panel
+            let mediumLabel = currentLang === 'fr' ? 'Matériau' : (currentLang === 'en' ? 'Medium' : 'Chất liệu');
+            let dateLabel = currentLang === 'fr' ? 'Date' : (currentLang === 'en' ? 'Date' : 'Ngày');
+
+            info.innerHTML = `
+                <h2>${painting.title}</h2>
+                <div class="painting-lb-meta">
+                    ${painting.medium ? `<div class="meta-row"><span class="meta-label">${mediumLabel}</span><span class="meta-value">${painting.medium}</span></div>` : ''}
+                    ${painting.date ? `<div class="meta-row"><span class="meta-label">${dateLabel}</span><span class="meta-value">${painting.date}</span></div>` : ''}
+                </div>
+                ${painting.description ? `<div class="painting-lb-desc">${painting.description}</div>` : ''}
+            `;
+
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function changePaintingImage(delta) {
+            const images = window.currentPaintingImages;
+            if (!images || images.length <= 1) return;
+
+            paintingImageIndex = (paintingImageIndex + delta + images.length) % images.length;
+
+            const img = document.getElementById('painting-lb-img');
+            const counter = document.getElementById('painting-lb-counter');
+            if (img) img.src = images[paintingImageIndex];
+            if (counter) counter.textContent = `${paintingImageIndex + 1} / ${images.length}`;
+        }
+
+        function closePaintingLightbox() {
+            const lightbox = document.getElementById('painting-lightbox');
+            if (lightbox) lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Painting lightbox event listeners
+        document.getElementById('painting-lb-close')?.addEventListener('click', closePaintingLightbox);
+        document.getElementById('painting-lb-prev')?.addEventListener('click', () => changePaintingImage(-1));
+        document.getElementById('painting-lb-next')?.addEventListener('click', () => changePaintingImage(1));
+        document.getElementById('painting-lightbox')?.addEventListener('click', function(e) {
+            if (e.target === this) closePaintingLightbox();
+        });
+
+        // Keyboard nav for painting lightbox
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('painting-lightbox');
+            if (!lightbox || lightbox.style.display !== 'flex') return;
+            if (e.key === 'Escape') closePaintingLightbox();
+            if (e.key === 'ArrowLeft') changePaintingImage(-1);
+            if (e.key === 'ArrowRight') changePaintingImage(1);
+        });
 
         // --- 9. CLOSE FILM DETAIL ---
         function closeFilmDetail() {
