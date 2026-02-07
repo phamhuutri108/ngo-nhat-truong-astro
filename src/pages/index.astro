@@ -260,8 +260,9 @@ const allSectionData = {
             const data = fullData[currentLang];
             if (!data) return;
 
-            // CASE A: GRID LAYOUT (FILMS)
+            // CASE A: GRID LAYOUT
             if (data.layout === 'grid') {
+                const isFilmSection = currentSectionId === 'films';
                 let html = `
                     <div class="dynamic-content fade-in">
                         <h2>${data.title}</h2>
@@ -271,33 +272,55 @@ const allSectionData = {
 
                 if (data.items) {
                     data.items.forEach((item, index) => {
-                        html += `
-                            <div class="gallery-item" data-film-index="${index}">
-                                <img src="${item.thumbnail}" alt="${item.title}">
-                                <div class="gallery-title">${item.title}</div>
-                            </div>
-                        `;
+                        if (item.thumbnail) {
+                            html += `
+                                <div class="gallery-item" data-item-index="${index}">
+                                    <img src="${item.thumbnail}" alt="${item.title}">
+                                    <div class="gallery-title">${item.title}</div>
+                                </div>
+                            `;
+                        } else {
+                            html += `
+                                <div class="gallery-item gallery-item-text" data-item-index="${index}">
+                                    <div class="gallery-text-card">
+                                        <div class="gallery-text-title">${item.title}</div>
+                                        ${item.date ? `<div class="gallery-text-date">${item.date}</div>` : ''}
+                                        ${item.excerpt ? `<div class="gallery-text-excerpt">${item.excerpt}</div>` : ''}
+                                    </div>
+                                    <div class="gallery-title">${item.title}</div>
+                                </div>
+                            `;
+                        }
                     });
                 }
 
                 html += `</div><div id="detail-view"></div></div>`;
                 dynamicDisplay.innerHTML = html;
 
-                // Store current film data
-                window.currentFilmData = data.items;
+                // Store current grid data
+                window.currentGridData = data.items;
+                window.currentGridIsFilm = isFilmSection;
 
                 // Add click handlers
                 dynamicDisplay.querySelectorAll('.gallery-item').forEach(item => {
                     item.addEventListener('click', function() {
-                        const idx = parseInt(this.getAttribute('data-film-index'));
-                        openFilmDetail(idx);
+                        const idx = parseInt(this.getAttribute('data-item-index'));
+                        if (isFilmSection) {
+                            openFilmDetail(idx);
+                        } else {
+                            openGenericDetail(idx);
+                        }
                     });
                 });
 
-                // Restore film detail if was viewing one
+                // Restore detail if was viewing one
                 if (currentFilmIndex !== -1) {
-                    if (window.currentFilmData && window.currentFilmData[currentFilmIndex]) {
-                        openFilmDetail(currentFilmIndex, false);
+                    if (window.currentGridData && window.currentGridData[currentFilmIndex]) {
+                        if (isFilmSection) {
+                            openFilmDetail(currentFilmIndex, false);
+                        } else {
+                            openGenericDetail(currentFilmIndex, false);
+                        }
                     } else {
                         currentFilmIndex = -1;
                     }
@@ -347,10 +370,10 @@ const allSectionData = {
 
         // --- 8. FILM DETAIL ---
         function openFilmDetail(index, doScroll = true) {
-            if (!window.currentFilmData || !window.currentFilmData[index]) return;
+            if (!window.currentGridData || !window.currentGridData[index]) return;
 
             currentFilmIndex = index;
-            const film = window.currentFilmData[index];
+            const film = window.currentGridData[index];
             const gridView = document.getElementById('grid-view');
             const detailView = document.getElementById('detail-view');
 
@@ -422,6 +445,50 @@ const allSectionData = {
             document.getElementById('btn-back-film')?.addEventListener('click', closeFilmDetail);
 
             // Lightbox for all images in detail
+            detailView.querySelectorAll('img').forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', function() {
+                    openLightbox(this.src);
+                });
+            });
+
+            if (doScroll) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // --- 8b. GENERIC DETAIL ---
+        function openGenericDetail(index, doScroll = true) {
+            if (!window.currentGridData || !window.currentGridData[index]) return;
+
+            currentFilmIndex = index;
+            const item = window.currentGridData[index];
+            const gridView = document.getElementById('grid-view');
+            const detailView = document.getElementById('detail-view');
+
+            if (gridView) gridView.style.display = 'none';
+
+            let thumbnailHTML = '';
+            if (item.thumbnail) {
+                thumbnailHTML = `<div style="margin-bottom: 30px;">
+                    <img src="${item.thumbnail}" style="max-width: 100%; height: auto; border-radius: 2px;" class="zoomable">
+                </div>`;
+            }
+
+            detailView.innerHTML = `
+                <div class="film-detail-view fade-in">
+                    <a class="btn-back" id="btn-back-generic" href="javascript:void(0)">&#8592;</a>
+                    <h2>${item.title}</h2>
+                    ${item.date ? `<div class="film-meta"><span class="meta-line">${item.date}</span></div>` : ''}
+                    ${thumbnailHTML}
+                    ${item.excerpt ? `<p style="font-style: italic; margin-bottom: 20px; color: #555;">${item.excerpt}</p>` : ''}
+                    ${item.content ? `<div style="white-space: pre-line; line-height: 1.8; font-size: 15px;">${item.content}</div>` : ''}
+                    <div style="height:50px"></div>
+                </div>
+            `;
+
+            document.getElementById('btn-back-generic')?.addEventListener('click', closeFilmDetail);
+
             detailView.querySelectorAll('img').forEach(img => {
                 img.style.cursor = 'zoom-in';
                 img.addEventListener('click', function() {

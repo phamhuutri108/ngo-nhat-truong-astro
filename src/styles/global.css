@@ -342,6 +342,58 @@ h1, h2, h3, h4, h5, p, .quote, .tagline {
     margin-top: 5px;
 }
 
+/* === TEXT GRID CARD === */
+.gallery-item-text {
+    cursor: pointer;
+}
+
+.gallery-item-text .gallery-title {
+    display: none;
+}
+
+.gallery-text-card {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 25px 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.gallery-item-text:hover .gallery-text-card {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
+.gallery-text-title {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #000;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.gallery-text-date {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.gallery-text-excerpt {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
 /* === FILM DETAIL === */
 .film-detail-view {
     animation: fadeIn 0.5s ease;
